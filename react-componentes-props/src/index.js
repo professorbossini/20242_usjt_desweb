@@ -2,6 +2,9 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '@fortawesome/fontawesome-free/css/all.min.css'
+import Pedido from './Pedido'
+
+
 const App = () => {
   return (
     <div
@@ -13,16 +16,16 @@ const App = () => {
         </div>
         <div className='row'>
           <div className='col-12 col-xl-3 col-md-6'>
-            <div className='border p-4'>Pedido 1</div>
+            <Pedido />
           </div>
           <div className='col-12 col-xl-3 col-md-6'>
-            <div className='border p-4'>Pedido 2</div>
+            <Pedido />
           </div>
           <div className='col-12 col-xl-3 col-md-6'>
-            <div className='border p-4'>Pedido 3</div>
+            <Pedido />
           </div>
           <div className='col-12 col-xl-3 col-md-6'>
-            <div className='border p-4'>Pedido 4</div>
+            <Pedido />
           </div> 
         </div>
     </div>
