@@ -18,6 +18,7 @@ export default class Busca extends React.Component {
 
   onFormSubmit = (event) => {
     event.preventDefault()
+    this.props.onBuscaRealizada(this.state.termoDeBusca)
 
   }
 
