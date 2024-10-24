@@ -2,3 +2,4 @@ versionamento_semantico.txt
 .vscode
 *.class
 *.jar
+node_modules/
