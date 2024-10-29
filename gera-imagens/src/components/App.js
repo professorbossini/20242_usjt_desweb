@@ -1,25 +1,41 @@
 import React from 'react'
-import Busca from "./Busca"
 import env from 'react-dotenv'
-import { createClient } from 'pexels' 
+import Busca from "./Busca"
+import ListaImagens from './ListaImagens'
+import PexelsLogo from './PexelsLogo'
+import pexelsClient from '../utils/pexelsClient'
+// import { createClient } from 'pexels'
 // useState hook
 export default class App extends React.Component {
 
   state = {
-    pics: []
+    pics: [],
+    contador: 1
   }
 
-  pexelsClient = null
+  // pexelsClient = null
 
-  componentDidMount(){
-    this.pexelsClient = createClient(env.PEXELS_KEY)
-  }
+  // componentDidMount(){
+  //   this.pexelsClient = createClient(env.PEXELS_KEY)
+  // }
 
-  onBuscaRealizada = (termo) => {
-    this.pexelsClient.photos.search({
-      query: termo,
-      per_page: 15
-    }).then(pics => this.setState({pics: pics.photos}))
+  // onBuscaRealizada = (termo) => {
+  //   this.pexelsClient.photos.search({
+  //     query: termo,
+  //     per_page: 15
+  //   }).then(pics => this.setState({pics: pics.photos}))
+  // }
+
+  onBuscaRealizada = async (termo) => {
+    const result = await pexelsClient.get('/search', {
+      params: {
+        query: termo,
+        locale: 'pt-BR',
+        per_page: 15,
+        page: this.state.contador
+      }
+    })
+    this.setState({pics: result.data.photos, contador: this.state.contador + 1})  
   }
   
   render(){
@@ -27,19 +43,20 @@ export default class App extends React.Component {
       <div 
         className='grid justify-content-center m-auto w-9 border-round border-1 border-400'>
           <div className='col-12'>
+            <PexelsLogo/>
+          </div>
+          <div className='col-12'>
             <h1>Exibir uma lista de...</h1>
           </div>
           <div className='col-12'>
             <Busca onBuscaRealizada={this.onBuscaRealizada}/>
           </div>
           <div className='col-12'>
-            {
-              this.state.pics.map((pic, key) => (
-                <div key={key}>
-                  <img src={pic.src.small} alt={pic.alt}/>
-                </div>
-              ))
-            }
+            <div className='grid'>
+              <ListaImagens
+                imgStyle="col-12 md:col-6 lg:col-4 xl:col-3" 
+                pics={this.state.pics}/>
+            </div>
           </div>
       </div>
     )
