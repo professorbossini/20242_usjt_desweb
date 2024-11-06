@@ -1,18 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Card } from 'primereact/card'
 import './Accordion.css'
 const Accordion = ({ itens }) => {
-  const expressaoJSX = itens.map((item, indice) => (
-    <Card id='accordion' key={indice} className='border-1 border-400'>
-        <div>
-          <i className='pi pi-angle-down'></i>
+
+  const [indiceAtivo, setIndiceAtivo] = useState(null)
+  const itemClicado = (indice) => {
+    setIndiceAtivo(indice)
+  }
+
+  const expressaoJSX = itens.map((item, indice) => {
+    const classExibirConteudo = indice === indiceAtivo ? '' : 'hidden'
+    const classExibirIcone = indice === indiceAtivo ? 'pi-angle-down': 'pi-angle-right'
+    return <Card id='accordion' key={indice} className='border-1 border-400'>
+        <div onClick={() => itemClicado(indice)}>
+          <i className={`pi ${classExibirIcone}`}></i>
           <h5 className='inline ml-2'>{item.titulo}</h5>
         </div>
-        <p>
+        <p className={`${classExibirConteudo}`}>
           {item.conteudo}
         </p>
     </Card>
-  ))
+  })
   return (
     <div>
       {
