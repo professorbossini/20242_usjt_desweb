@@ -26,8 +26,19 @@ const Busca = () => {
       )
       setResultados(data.query.search)
     }
-    if(termoDeBusca)
+    if(termoDeBusca && resultados.length === 0){
       fazBusca()
+    }
+    else{
+      const timeoutId = setTimeout(() => {
+        if(termoDeBusca)
+          fazBusca()
+      }, 2000)
+      //essa é uma função de limpeza
+      return () => {
+        clearTimeout(timeoutId)
+      }
+    }
   }, [termoDeBusca])
   return (
     <div>
